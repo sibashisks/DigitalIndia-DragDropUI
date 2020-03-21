@@ -32,7 +32,6 @@
 
 			var body = currentSettings.body;
 
-			// Can the body be converted to JSON?
 			if (body) {
 				try {
 					body = JSON.parse(body);
@@ -66,7 +65,7 @@
 				},
 				error: function (xhr, status, error) {
 					if (!lockErrorStage) {
-						// TODO: Figure out a way to intercept CORS errors only. The error message for CORS errors seems to be a standard 404.
+
 						errorStage++;
 						self.updateNow();
 					}

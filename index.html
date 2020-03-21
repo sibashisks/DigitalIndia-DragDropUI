@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>freeboard</title>
+    <title>TCM</title>
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -11,12 +11,10 @@
     <script src="js/freeboard.thirdparty.min.js"></script>
     <script type="text/javascript">
         head.js("js/freeboard_plugins.min.js",
-                // *** Load more plugins here ***
                 function(){
                     $(function()
                     { //DOM Ready
                         freeboard.initialize(true);
-
                         var hashpattern = window.location.hash.match(/(&|#)source=([^&]+)/);
                         if (hashpattern !== null) {
                             $.getJSON(hashpattern[2], function(data) {
@@ -57,7 +55,6 @@
             </div>
             <div id="datasources">
                 <h2 class="title">DATASOURCES</h2>
-
                 <div class="datasource-list-container">
                     <table class="table table-condensed sub-table" id="datasources-list" data-bind="if: datasources().length">
                         <thead>
@@ -106,7 +103,6 @@
     <ul data-bind="template: { name: 'pane-template', foreach: panes}">
     </ul>
 </div>
-
 <script type="text/html" id="pane-template">
     <li data-bind="pane: true">
         <header>
@@ -142,6 +138,5 @@
         </section>
     </li>
 </script>
-
 </body>
 </html>

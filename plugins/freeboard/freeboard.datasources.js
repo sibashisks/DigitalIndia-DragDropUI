@@ -1,20 +1,9 @@
-// ┌────────────────────────────────────────────────────────────────────┐ \\
-// │ F R E E B O A R D                                                  │ \\
-// ├────────────────────────────────────────────────────────────────────┤ \\
-// │ Copyright © 2013 Jim Heising (https://github.com/jheising)         │ \\
-// │ Copyright © 2013 Bug Labs, Inc. (http://buglabs.net)               │ \\
-// ├────────────────────────────────────────────────────────────────────┤ \\
-// │ Licensed under the MIT license.                                    │ \\
-// └────────────────────────────────────────────────────────────────────┘ \\
-
 (function () {
 	var jsonDatasource = function (settings, updateCallback) {
 		var self = this;
 		var updateTimer = null;
 		var currentSettings = settings;
-		var errorStage = 0; 	// 0 = try standard request
-		// 1 = try JSONP
-		// 2 = try thingproxy.freeboard.io
+		var errorStage = 0; 	
 		var lockErrorStage = false;
 
 		function updateRefresh(refreshTime) {
@@ -30,7 +19,7 @@
 		updateRefresh(currentSettings.refresh * 1000);
 
 		this.updateNow = function () {
-			if ((errorStage > 1 && !currentSettings.use_thingproxy) || errorStage > 2) // We've tried everything, let's quit
+			if ((errorStage > 1 && !currentSettings.use_thingproxy) || errorStage > 2)
 			{
 				return; // TODO: Report an error
 			}

@@ -57,24 +57,18 @@ exports.getAutofillMenuItemSelector = function(index) {
 exports.addJSONDatasource = function(test, name, url) {
 
 	casper.then(function() {
-		// Click Add datasource
 		casper.click(SELECTORS.addDatasource);
 
-		// Select JSON
 		setValueAndTriggerChange(test, SELECTORS.pluginTypeDropdown, 'JSON');
 
-		// Name the datasource "json_input"
 		setValueAndTriggerChange(test, SELECTORS.nameValueInput, name);
 
-		// Specify fixtures/input.json as the source
 		setValueAndTriggerChange(test, SELECTORS.urlValueInput, url);
 	});
 
-	// Click ok
 	clickModalOK(test);
 
 	casper.then(function() {
-		// Assert that the datasource displays correctly
 		test.assertVisible(SELECTORS.datasourceName);
 		var datasourceName = casper.fetchText(SELECTORS.datasourceName);
 		test.assertEquals(datasourceName, name);

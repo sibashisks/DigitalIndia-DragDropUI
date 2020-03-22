@@ -1,9 +1,13 @@
+
+
 (function () {
 	var jsonDatasource = function (settings, updateCallback) {
 		var self = this;
 		var updateTimer = null;
 		var currentSettings = settings;
-		var errorStage = 0; 	
+		var errorStage = 0; 	// 0 = try standard request
+		// 1 = try JSONP
+		// 2 = try thingproxy.freeboard.io
 		var lockErrorStage = false;
 
 		function updateRefresh(refreshTime) {
@@ -19,7 +23,7 @@
 		updateRefresh(currentSettings.refresh * 1000);
 
 		this.updateNow = function () {
-			if ((errorStage > 1 && !currentSettings.use_thingproxy) || errorStage > 2)
+			if ((errorStage > 1 && !currentSettings.use_thingproxy) || errorStage > 2) // We've tried everything, let's quit
 			{
 				return; // TODO: Report an error
 			}
@@ -32,6 +36,7 @@
 
 			var body = currentSettings.body;
 
+			// Can the body be converted to JSON?
 			if (body) {
 				try {
 					body = JSON.parse(body);
@@ -65,7 +70,7 @@
 				},
 				error: function (xhr, status, error) {
 					if (!lockErrorStage) {
-
+						// TODO: Figure out a way to intercept CORS errors only. The error message for CORS errors seems to be a standard 404.
 						errorStage++;
 						self.updateNow();
 					}
@@ -306,8 +311,8 @@
 	};
 
 	freeboard.loadDatasourcePlugin({
-		"type_name": "dweet_io",
-		"display_name": "Dweet.io",
+		"type_name": "Chatbot",
+		"display_name": "Chatbot",
 		"external_scripts": [
 			"http://dweet.io/client/dweet.io.min.js"
 		],
@@ -491,7 +496,7 @@ freeboard.loadDatasourcePlugin({
 		// **type_name** (required) : A unique name for this plugin. This name should be as unique as possible to avoid collisions with other plugins, and should follow naming conventions for javascript variable and function declarations.
 		"type_name"   : "meshblu",
 		// **display_name** : The pretty name that will be used for display purposes for this plugin. If the name is not defined, type_name will be used instead.
-		"display_name": "Octoblu",
+		"display_name": "Chatbot",
         // **description** : A description of the plugin. This description will be displayed when the plugin is selected or within search results (in the future). The description may contain HTML if needed.
         "description" : "app.octoblu.com",
 		// **external_scripts** : Any external scripts that should be loaded before the plugin instance is created.
